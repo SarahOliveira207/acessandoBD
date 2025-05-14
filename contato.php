@@ -1,32 +1,33 @@
-<?php
-    $string_conexao = "pgsql:host=localhost; port=5432; dbname=cursos; user=postgres; password=postgres";
+<html>
+    <body>
+        <style>
+            table{
+                color
+            }
+        </style>
+        <?php
+            include "util.php";
 
-    $conn = new PDO($string_conexao);
+            $conn = concetar();
+            // $varSQL = "select nome, email, celular from alunos order by nome, email, celular"; //sentença sql que mostra todos os alunos
+            $varSQL = "select *from alunos";
+            $select = $conn->query($varSQL);
+            ?>
 
-    if(!$conn){
-        echo "nao posso continuar";
-        exit;
-    }
+            <table>
+                <tr>
+                    <td>Nome</td><td>Email</td><td>Celular</td>
+                </tr>
+            </table>
+            <?php
 
-    $varSQL = "select nome, email, celular from alunos order by nome, email, celular";
-
-    $select = $conn->query($varSQL);
-    
-        /*echo "Nome:" .$linha['nome']."</br>";
-        echo "Email: " .$linha['email']."</br>";
-        echo "Celular: " .$linha['celular']."</br>";*/
-
-
-    echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Nome</th><th>Idade</th></tr>";
-
-    while($linha = $select->fetch()){
-        echo "<tr>";
-        echo "<td>{$linha['nome']}</td>";
-        echo "<td>{$linha['email']}</td>";
-        echo "<td>{$linha['celular']}</td>";
-        echo "</tr>";
-    }
-
-    echo "</table>";
-?>
+                while($linha = $select->fetch()){ //fetch - responsável por fazer a leitura do select
+                    echo "<tr>";
+                    echo "<td>{$linha['nome']}</td>";
+                    echo "<td>{$linha['email']}</td>";
+                    echo "<td>{$linha['celular']}</td>";
+                    echo "</tr>";
+                }
+        ?>
+    </body>
+</html>
